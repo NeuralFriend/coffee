@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import dagger.Module
 import dagger.Provides
 import my.app.coffee.core.main.TokenInterceptor
@@ -54,6 +56,12 @@ class AppModule(private val context: Context) {
 
     @Provides
     @Singleton
+    fun provideFusedLocationProvider(context: Context): FusedLocationProviderClient {
+        return LocationServices.getFusedLocationProviderClient(context)
+    }
+
+    @Provides
+    @Singleton
     fun provideSharedPreferences(context: Context): SharedPreferences =
         context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
 
@@ -69,13 +77,14 @@ class AppModule(private val context: Context) {
 }
 
 class CoffeeListViewModelFactory(
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val locationClient: FusedLocationProviderClient
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(CoffeeListViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return CoffeeListViewModel(apiService, ) as T
+            return CoffeeListViewModel(apiService, locationClient) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

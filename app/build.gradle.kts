@@ -57,7 +57,7 @@ android {
 }
 
 dependencies {
-
+    implementation ("com.google.accompanist:accompanist-permissions:0.36.0")
     implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11")
 
     implementation("io.coil-kt:coil-compose:2.4.0")

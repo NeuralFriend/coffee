@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory
 import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -25,13 +26,17 @@ import my.app.coffee.ui.screens.coffee_list.CoffeeListViewModel
 fun MapScreen(navController: NavController) {
     val context = LocalContext.current
     val app = context.applicationContext as App
-    val factory = CoffeeListViewModelFactory(app.appComponent.apiService())
+    val factory = CoffeeListViewModelFactory(
+        app.appComponent.apiService(),
+        locationClient = app.appComponent.locationProvider()
+    )
     val viewModel: CoffeeListViewModel = viewModel(factory = factory)
     val locations by viewModel.locations
 
+    MapKitFactory.initialize(context)
+
     LifeScreen(
         onStart = {
-            MapKitFactory.initialize(context)
             MapKitFactory.getInstance().onStart()
         },
         onStop = {
@@ -39,12 +44,17 @@ fun MapScreen(navController: NavController) {
         },
     )
 
+    LaunchedEffect(Unit) {
+        viewModel.loadLocations()
+    }
+
     if (locations.isNotEmpty()) {
         AndroidView(
             modifier = Modifier.fillMaxSize(),
             factory = { ctx ->
                 MapsView(ctx).apply {
-                    val originalBitmap = BitmapFactory.decodeResource(ctx.resources, R.drawable.coffee)
+                    val originalBitmap =
+                        BitmapFactory.decodeResource(ctx.resources, R.drawable.coffee)
                     val smallBitmap = originalBitmap.scale(64, 64)
                     val imageProvider = ImageProvider.fromBitmap(smallBitmap)
                     val pinsCollection = mapWindow.map.mapObjects.addCollection()
@@ -65,7 +75,8 @@ fun MapScreen(navController: NavController) {
                         }
                     }
 
-                    val firstPoint = Point(locations.first().point.latitude, locations.first().point.longitude)
+                    val firstPoint =
+                        Point(locations.first().point.latitude, locations.first().point.longitude)
                     mapWindow.map.move(CameraPosition(firstPoint, 14.5f, 0f, 0f))
                 }
             }
