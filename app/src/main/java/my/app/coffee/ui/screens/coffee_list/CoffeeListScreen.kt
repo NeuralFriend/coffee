@@ -1,5 +1,6 @@
 package my.app.coffee.ui.screens.coffee_list
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -17,6 +18,7 @@ import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,6 +28,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import my.app.coffee.core.App
 import my.app.coffee.core.di.CoffeeListViewModelFactory
+import my.app.coffee.ui.navigation.Screen
 
 
 @Composable
@@ -35,10 +38,11 @@ fun CoffeeListScreen(navController: NavController) {
     val factory = CoffeeListViewModelFactory(app.appComponent.apiService())
     val viewModel: CoffeeListViewModel = viewModel(factory = factory)
 
-    val locations = viewModel.locations
+    val locations by viewModel.locations
 
     val textColor = Color(0xFF846340)
     val cardColor = Color(0xFFFBF3EC)
+
 
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
@@ -48,12 +52,15 @@ fun CoffeeListScreen(navController: NavController) {
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
         ) {
             items(locations) { place ->
-                Card (
+                Card(
                     shape = RoundedCornerShape(12.dp),
                     backgroundColor = cardColor,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 6.dp),
+                        .padding(vertical = 6.dp)
+                        .clickable {
+                            navController.navigate("menu/${place.id}")
+                        },
                     elevation = 4.dp
                 ) {
                     Column(Modifier.padding(16.dp)) {
@@ -74,7 +81,7 @@ fun CoffeeListScreen(navController: NavController) {
         }
 
         Button(
-            onClick = { navController.navigate("map") },
+            onClick = { navController.navigate(Screen.Map.route) },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()

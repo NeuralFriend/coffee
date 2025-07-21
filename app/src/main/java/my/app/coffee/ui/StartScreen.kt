@@ -24,14 +24,18 @@ fun StartScreen(navController: NavController) {
             navController.navigate(Screen.Login.route) {
                 popUpTo(Screen.Start.route) { inclusive = true }
             }
-        } else {
+        }
+        else {
             navController.navigate(Screen.CoffeeList.route) {
                 popUpTo(Screen.Start.route) { inclusive = true }
             }
         }
     }
 
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
         CircularProgressIndicator()
     }
 }

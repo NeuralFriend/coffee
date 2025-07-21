@@ -1,8 +1,8 @@
 package my.app.coffee.ui.screens.coffee_list
 
-import androidx.compose.runtime.getValue
+import android.util.Log
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
@@ -11,18 +11,21 @@ import my.app.coffee.model.CoffeeLocation
 
 class CoffeeListViewModel(private val api: ApiService) : ViewModel() {
 
-    var locations by mutableStateOf<List<CoffeeLocation>>(emptyList())
-        private set
+    private val _locations = mutableStateOf<List<CoffeeLocation>>(emptyList())
+    val locations: State<List<CoffeeLocation>> = _locations
 
     init {
         loadLocations()
     }
 
-    private fun loadLocations() {
+    fun loadLocations() {
         viewModelScope.launch {
             try {
-                locations = api.getLocations()
+                val response = api.getLocations()
+                Log.d("LOCATIONS", "Загружено: ${response.size}")
+                _locations.value = response
             } catch (e: Exception) {
+                Log.e("LOCATIONS", "Ошибка: ${e.message}")
             }
         }
     }

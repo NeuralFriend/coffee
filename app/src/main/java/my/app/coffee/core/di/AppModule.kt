@@ -10,6 +10,7 @@ import my.app.coffee.core.main.TokenInterceptor
 import my.app.coffee.data.ApiService
 import my.app.coffee.data.AuthApi
 import my.app.coffee.ui.screens.coffee_list.CoffeeListViewModel
+import my.app.coffee.ui.screens.menu.MenuViewModel
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -74,7 +75,21 @@ class CoffeeListViewModelFactory(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(CoffeeListViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return CoffeeListViewModel(apiService) as T
+            return CoffeeListViewModel(apiService, ) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
+}
+
+class MenuViewModelFactory(
+    private val apiService: ApiService,
+    private val locationId: Int
+) : ViewModelProvider.Factory {
+
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(MenuViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return MenuViewModel(apiService, locationId) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

@@ -58,7 +58,10 @@ fun RegisterScreen(navController: NavController) {
     LaunchedEffect(uiState) {
         if (uiState is RegisterUiState.Success) {
             viewModel.resetState()
-            navController.navigate(Screen.CoffeeList.route)
+            navController.navigate(Screen.CoffeeList.route) {
+                popUpTo(0) { inclusive = true }
+                launchSingleTop = true
+            }
         }
     }
 

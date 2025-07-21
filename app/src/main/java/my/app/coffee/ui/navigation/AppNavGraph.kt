@@ -36,9 +36,11 @@ fun AppNavGraph(navController: NavHostController) {
             MapScreen(navController)
         }
 
-        composable(Screen.Menu.route) { backStackEntry ->
-            val id = backStackEntry.arguments?.getString("id")?.toIntOrNull() ?: 0
-            MenuScreen(navController, id)
+        composable("menu/{locationId}") { backStackEntry ->
+            val id = backStackEntry.arguments?.getString("locationId")?.toIntOrNull()
+            if (id != null) {
+                MenuScreen(navController, id)
+            }
         }
 
         composable(Screen.Cart.route) {

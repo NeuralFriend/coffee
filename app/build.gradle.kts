@@ -6,13 +6,19 @@ plugins {
     id("kotlin-kapt")
 }
 
+val mapKitKey = properties["mapKitKey"] as String
+
 android {
     namespace = "my.app.coffee"
     compileSdk = 35
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
         applicationId = "my.app.coffee"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -27,7 +33,16 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "MAPS_KEY", "\"$mapKitKey\"")
+
         }
+
+        debug {
+            signingConfig = signingConfigs.getByName("debug")
+
+            buildConfigField("String", "MAPS_KEY", "\"$mapKitKey\"")
+        }
+
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -44,6 +59,8 @@ android {
 dependencies {
 
     implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11")
+
+    implementation("io.coil-kt:coil-compose:2.4.0")
 
     implementation ("com.google.dagger:dagger:2.54")
     implementation(libs.ads.mobile.sdk)
@@ -63,6 +80,8 @@ dependencies {
 
     implementation ("com.squareup.okhttp3:okhttp:4.12.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.12.0")
+
+    implementation (libs.maps.mobile)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
