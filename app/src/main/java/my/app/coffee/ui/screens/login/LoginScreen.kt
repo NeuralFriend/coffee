@@ -34,7 +34,9 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import my.app.coffee.core.App
-import my.app.coffee.ui.navigation.Screen
+import my.app.coffee.core.navigation.Screen
+import my.app.coffee.ui.theme.borderColor
+import my.app.coffee.ui.theme.buttonColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,9 +65,6 @@ fun LoginScreen(navController: NavController) {
             }
         }
     }
-
-    val borderColor = Color(0xFFF6E5D1)
-    val buttonColor = Color(0xFF846340)
 
     Scaffold(
         bottomBar = {

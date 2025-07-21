@@ -1,4 +1,4 @@
-package my.app.coffee.ui.navigation
+package my.app.coffee.core.navigation
 
 sealed class Screen(val route: String) {
     object Start : Screen("start")

@@ -29,7 +29,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import my.app.coffee.core.App
 import my.app.coffee.core.di.CoffeeListViewModelFactory
-import my.app.coffee.ui.navigation.Screen
+import my.app.coffee.core.navigation.Screen
 
 
 @Composable

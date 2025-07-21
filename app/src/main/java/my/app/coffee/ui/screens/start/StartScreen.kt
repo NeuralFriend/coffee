@@ -1,4 +1,4 @@
-package my.app.coffee.ui
+package my.app.coffee.ui.screens.start
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import my.app.coffee.core.App
-import my.app.coffee.ui.navigation.Screen
+import my.app.coffee.core.navigation.Screen
 
 @Composable
 fun StartScreen(navController: NavController) {

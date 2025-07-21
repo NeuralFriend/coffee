@@ -1,10 +1,10 @@
-package my.app.coffee.ui.navigation
+package my.app.coffee.core.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import my.app.coffee.ui.StartScreen
+import my.app.coffee.ui.screens.start.StartScreen
 import my.app.coffee.ui.screens.cart.CartScreen
 import my.app.coffee.ui.screens.coffee_list.CoffeeListScreen
 import my.app.coffee.ui.screens.login.LoginScreen

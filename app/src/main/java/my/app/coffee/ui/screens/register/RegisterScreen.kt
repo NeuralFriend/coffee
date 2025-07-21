@@ -28,7 +28,9 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import my.app.coffee.core.App
-import my.app.coffee.ui.navigation.Screen
+import my.app.coffee.core.navigation.Screen
+import my.app.coffee.ui.theme.borderColor
+import my.app.coffee.ui.theme.buttonColor
 
 @Composable
 fun RegisterScreen(navController: NavController) {
@@ -64,9 +66,6 @@ fun RegisterScreen(navController: NavController) {
             }
         }
     }
-
-    val borderColor = Color(0xFFF6E5D1)
-    val btnColor = Color(0xFF846340)
 
     Box(
         modifier = Modifier
@@ -126,7 +125,7 @@ fun RegisterScreen(navController: NavController) {
                 enabled = !isLoading,
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = btnColor,
+                    containerColor = buttonColor,
                     contentColor = Color.White
                 )
             ) {
