@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import my.app.coffee.ui.StartScreen
 import my.app.coffee.ui.screens.cart.CartScreen
 import my.app.coffee.ui.screens.coffee_list.CoffeeListScreen
 import my.app.coffee.ui.screens.login.LoginScreen
@@ -13,7 +14,11 @@ import my.app.coffee.ui.screens.register.RegisterScreen
 
 @Composable
 fun AppNavGraph(navController: NavHostController) {
-    NavHost(navController, startDestination = Screen.Register.route) {
+    NavHost(navController, startDestination = Screen.Start.route) {
+
+        composable(Screen.Start.route) {
+            StartScreen(navController)
+        }
 
         composable(Screen.Register.route) {
             RegisterScreen(navController)

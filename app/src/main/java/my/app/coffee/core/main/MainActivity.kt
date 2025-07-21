@@ -1,4 +1,4 @@
-package my.app.coffee.core
+package my.app.coffee.core.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

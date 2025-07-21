@@ -43,6 +43,8 @@ android {
 
 dependencies {
 
+    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11")
+
     implementation ("com.google.dagger:dagger:2.54")
     implementation(libs.ads.mobile.sdk)
     kapt ("com.google.dagger:dagger-compiler:2.54")

@@ -1,6 +1,7 @@
 package my.app.coffee.ui.navigation
 
 sealed class Screen(val route: String) {
+    object Start : Screen("start")
     object Register : Screen("register")
     object Login : Screen("login")
     object CoffeeList : Screen("coffee_list")
