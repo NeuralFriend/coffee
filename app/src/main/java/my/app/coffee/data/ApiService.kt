@@ -9,7 +9,7 @@ interface ApiService {
     @GET("locations")
     suspend fun getLocations(): List<CoffeeLocation>
 
-    @GET("locations/{id}/menu")
+    @GET("location/{id}/menu")
     suspend fun getMenu(@Path("id") locationId: Int): List<MenuItem>
 }
 

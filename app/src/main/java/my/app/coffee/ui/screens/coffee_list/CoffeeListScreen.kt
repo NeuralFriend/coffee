@@ -38,7 +38,6 @@ import my.app.coffee.core.App
 import my.app.coffee.core.di.CoffeeListViewModelFactory
 import my.app.coffee.core.navigation.Screen
 
-
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun CoffeeListScreen(navController: NavController) {
@@ -58,20 +57,21 @@ fun CoffeeListScreen(navController: NavController) {
     val error by viewModel.error
     val userLocation by viewModel.userLocation
 
-    // Загружаем локации при старте
     LaunchedEffect(Unit) {
         viewModel.loadLocations()
         permissionState.launchPermissionRequest()
     }
 
-    // Загружаем позицию пользователя, если разрешено
     LaunchedEffect(permissionState.status.isGranted) {
         if (permissionState.status.isGranted) {
             viewModel.loadUserLocation()
         }
+        if(viewModel.error.value != null){
+            navController.navigate(Screen.Login.route)
+        }
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize().padding(top = 16.dp)) {
         if (isLoading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         } else if (!error.isNullOrEmpty()) {

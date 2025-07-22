@@ -1,6 +1,7 @@
 package my.app.coffee.core.main
 
 import android.content.SharedPreferences
+import android.util.Log
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -10,6 +11,7 @@ class TokenInterceptor(
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val token = prefs.getString("access_token", null)
+        Log.d("TOKEN", "$token")
 
         val requestBuilder = chain.request().newBuilder()
         if (!token.isNullOrEmpty()) {
